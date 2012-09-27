@@ -88,10 +88,7 @@ void queue::display()
 
 bool queue::isempty()
 {
-	if(front==NULL) 
-        return true;
-	else 
-        return false;
+	return (front==NULL); 
 }
 
 void queue::bsort()

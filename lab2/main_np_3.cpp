@@ -50,7 +50,7 @@ int main()
                      break;
             default:break;
         };
-    
+         
         ready.bsort();     
         if(execution==NULL && !ready.isempty())
             execution = ready.dequeue();
