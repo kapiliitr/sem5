@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #define BSIZE 4
-#define NUMITEMS 17
+#define NUMITEMS 10
 
 typedef struct {
   char buf[BSIZE];
@@ -39,7 +39,7 @@ main( int argc, char *argv[] )
 
 void * producer(void * parm)
 {
-  char item[NUMITEMS+1]="OPERATING SYSTEMS";
+  char item[NUMITEMS+1]="IITROORKEE";
   int i;
 
   printf("producer started.\n");
