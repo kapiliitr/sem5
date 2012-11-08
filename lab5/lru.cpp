@@ -16,12 +16,26 @@
 
 using namespace std;
 
-#define THRESHOLD 0.9
+#define THRESHOLD 0.2
 
-struct process
+class process
 {
+  public:
     int num_of_pages;
+    int num_page_references;
+    int num_page_faults;
+    double page_fault_rate;
+    process();
 };
+
+process::process()
+{
+  num_of_pages=0;
+  num_page_references=0;
+  num_page_faults=0;
+  page_fault_rate=0.0;
+}
+
 
 int main()
 {
@@ -78,6 +92,7 @@ int main()
     for(it=pages.begin();it<pages.end();it++)
     {
         length_of_string++;
+        Proc[(*it).first].num_page_references++;
         map<pair<int,int>,bool>::const_iterator res = pages_queue_map.find(*it);
         if(res->second==true) //Page found
         {
@@ -94,6 +109,8 @@ int main()
         {
             num_page_faults++;
             page_fault_rate = (double)num_page_faults/length_of_string;
+            Proc[(*it).first].num_page_faults++;
+            Proc[(*it).first].page_fault_rate=((double)Proc[(*it).first].num_page_faults)/Proc[(*it).first].num_page_references;
             if(((int)lru_q.size())==num_of_frames) //Do page replacement
             {  
                 for(iter=0;iter<lru_q.size();iter++)
@@ -102,7 +119,7 @@ int main()
                         break;
                     }
 
-                if(page_fault_rate<=THRESHOLD || iter==lru_q.size()) //Do Global LRU
+                if(/*page_fault_rate*/Proc[(*it).first].page_fault_rate<=THRESHOLD || iter==lru_q.size()) //Do Global LRU
                 {
                     cout<<"Global"<<endl;
                     remove_proc_page = lru_q.front();
@@ -125,7 +142,7 @@ int main()
             cout<<"("<<lru_q[iter].first<<","<<lru_q[iter].second<<") ";
         cout<<endl;
     }
-    cout<<"Number of page faults = "<<num_page_faults<<endl;
+    cout<<"Total number of page faults = "<<num_page_faults<<endl;
     
     //Free memory
     delete [] Proc;

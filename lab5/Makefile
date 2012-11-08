@@ -16,4 +16,3 @@ lru:
 
 clean:
 	rm -rf $(EXEC) *.out
-
